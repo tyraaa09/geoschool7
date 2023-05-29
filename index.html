@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/filter.css">
+<link rel="stylesheet" href="css/nouislider.min.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>GeoSchool</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="js/tailDT.js"></script>
+<script src="js/nouislider.min.js"></script>
+<script src="js/wNumb.js"></script>
+        <script src="data/sempadandaerah_1.js"></script>
+        <script src="data/Mukim_2.js"></script>
+        <script src="data/Jalan_JKR_Persekutuan_KBB_3.js"></script>
+        <script src="data/Jalan_JKR_Negeri_KBB_4.js"></script>
+        <script src="data/Kawasanberhampiran_5.js"></script>
+        <script src="data/Kawasan_6.js"></script>
+        <script src="data/School_7.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[5.198296859573201,100.46151478759458],[5.502898095589132,101.03688787339698]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMapStandard_0');
+        map.getPane('pane_OpenStreetMapStandard_0').style.zIndex = 400;
+        var layer_OpenStreetMapStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMapStandard_0',
+            opacity: 0.8,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMapStandard_0;
+        map.addLayer(layer_OpenStreetMapStandard_0);
+        function pop_sempadandaerah_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+        }
+
+        function style_sempadandaerah_1_0() {
+            return {
+                pane: 'pane_sempadandaerah_1',
+                opacity: 1,
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '10,5,1,5',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_sempadandaerah_1');
+        map.getPane('pane_sempadandaerah_1').style.zIndex = 401;
+        map.getPane('pane_sempadandaerah_1').style['mix-blend-mode'] = 'normal';
+        var layer_sempadandaerah_1 = new L.geoJson(json_sempadandaerah_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_sempadandaerah_1',
+            layerName: 'layer_sempadandaerah_1',
+            pane: 'pane_sempadandaerah_1',
+            onEachFeature: pop_sempadandaerah_1,
+            style: style_sempadandaerah_1_0,
+        });
+        bounds_group.addLayer(layer_sempadandaerah_1);
+        map.addLayer(layer_sempadandaerah_1);
+        function pop_Mukim_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['KETERANGAN'] !== null ? autolinker.link(feature.properties['KETERANGAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Mukim_2_0(feature) {
+            switch(String(feature.properties['KETERANGAN'])) {
+                case 'Bandar Kulim':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(254,235,226,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Bandar Lunas':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,225,219,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Bandar Padang Serai':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(253,215,211,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Bagan Sena':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,205,204,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Junjong':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(252,195,196,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Karangan':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,185,189,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Kulim':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(251,173,183,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Mahang':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,159,178,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Naga Lilit':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(249,145,174,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Padang China':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,132,170,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Padang Meha':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(248,118,165,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Sedim':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,104,161,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Sidam Kanan':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238,90,157,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Sungai Seluang':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,76,153,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Sungai Ular':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,62,148,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Mukim Terap':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,48,144,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Pekan Karangan':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,34,140,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Pekan Labu Besar':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(190,25,136,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Pekan Merbau Pulas':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(177,20,133,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Pekan Padang Meha':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(163,15,129,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Pekan Sungai Karangan':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(149,10,126,0.7)',
+                interactive: true,
+            }
+                    break;
+                case 'Pekan Sungai Kob':
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(136,6,122,0.7)',
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_Mukim_2',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.7)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(122,1,119,0.7)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Mukim_2');
+        map.getPane('pane_Mukim_2').style.zIndex = 402;
+        map.getPane('pane_Mukim_2').style['mix-blend-mode'] = 'normal';
+        var layer_Mukim_2 = new L.geoJson(json_Mukim_2, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Mukim_2',
+            layerName: 'layer_Mukim_2',
+            pane: 'pane_Mukim_2',
+            onEachFeature: pop_Mukim_2,
+            style: style_Mukim_2_0,
+        });
+        bounds_group.addLayer(layer_Mukim_2);
+        map.addLayer(layer_Mukim_2);
+        function pop_Jalan_JKR_Persekutuan_KBB_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['FC'] !== null ? autolinker.link(feature.properties['FC'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAM'] !== null ? autolinker.link(feature.properties['NAM'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LEN</th>\
+                        <td>' + (feature.properties['LEN'] !== null ? autolinker.link(feature.properties['LEN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRICT</th>\
+                        <td>' + (feature.properties['DISTRICT'] !== null ? autolinker.link(feature.properties['DISTRICT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">STATE</th>\
+                        <td>' + (feature.properties['STATE'] !== null ? autolinker.link(feature.properties['STATE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jalan_JKR_Persekutuan_KBB_3_0() {
+            return {
+                pane: 'pane_Jalan_JKR_Persekutuan_KBB_3',
+                opacity: 1,
+                color: 'rgba(253,191,111,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Jalan_JKR_Persekutuan_KBB_3');
+        map.getPane('pane_Jalan_JKR_Persekutuan_KBB_3').style.zIndex = 403;
+        map.getPane('pane_Jalan_JKR_Persekutuan_KBB_3').style['mix-blend-mode'] = 'normal';
+        var layer_Jalan_JKR_Persekutuan_KBB_3 = new L.geoJson(json_Jalan_JKR_Persekutuan_KBB_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jalan_JKR_Persekutuan_KBB_3',
+            layerName: 'layer_Jalan_JKR_Persekutuan_KBB_3',
+            pane: 'pane_Jalan_JKR_Persekutuan_KBB_3',
+            onEachFeature: pop_Jalan_JKR_Persekutuan_KBB_3,
+            style: style_Jalan_JKR_Persekutuan_KBB_3_0,
+        });
+        bounds_group.addLayer(layer_Jalan_JKR_Persekutuan_KBB_3);
+        map.addLayer(layer_Jalan_JKR_Persekutuan_KBB_3);
+        function pop_Jalan_JKR_Negeri_KBB_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">RD_NAME</th>\
+                        <td>' + (feature.properties['RD_NAME'] !== null ? autolinker.link(feature.properties['RD_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">LENGTH</th>\
+                        <td>' + (feature.properties['LENGTH'] !== null ? autolinker.link(feature.properties['LENGTH'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">DISTRICT</th>\
+                        <td>' + (feature.properties['DISTRICT'] !== null ? autolinker.link(feature.properties['DISTRICT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">STATE</th>\
+                        <td>' + (feature.properties['STATE'] !== null ? autolinker.link(feature.properties['STATE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Jalan_JKR_Negeri_KBB_4_0() {
+            return {
+                pane: 'pane_Jalan_JKR_Negeri_KBB_4',
+                opacity: 1,
+                color: 'rgba(255,127,0,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Jalan_JKR_Negeri_KBB_4');
+        map.getPane('pane_Jalan_JKR_Negeri_KBB_4').style.zIndex = 404;
+        map.getPane('pane_Jalan_JKR_Negeri_KBB_4').style['mix-blend-mode'] = 'normal';
+        var layer_Jalan_JKR_Negeri_KBB_4 = new L.geoJson(json_Jalan_JKR_Negeri_KBB_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Jalan_JKR_Negeri_KBB_4',
+            layerName: 'layer_Jalan_JKR_Negeri_KBB_4',
+            pane: 'pane_Jalan_JKR_Negeri_KBB_4',
+            onEachFeature: pop_Jalan_JKR_Negeri_KBB_4,
+            style: style_Jalan_JKR_Negeri_KBB_4_0,
+        });
+        bounds_group.addLayer(layer_Jalan_JKR_Negeri_KBB_4);
+        map.addLayer(layer_Jalan_JKR_Negeri_KBB_4);
+        function pop_Kawasanberhampiran_5(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Kawasan</th>\
+                        <td>' + (feature.properties['Kawasan'] !== null ? autolinker.link(feature.properties['Kawasan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Ring</th>\
+                        <td>' + (feature.properties['ringId'] !== null ? autolinker.link(feature.properties['ringId'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Jarak</th>\
+                        <td>' + (feature.properties['distance'] !== null ? autolinker.link(feature.properties['distance'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Kawasanberhampiran_5_0() {
+            return {
+                pane: 'pane_Kawasanberhampiran_5',
+                opacity: 0.4,
+                color: 'rgba(35,35,35,0.3)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 0,
+                fillColor: 'rgba(167,151,208,0.3)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Kawasanberhampiran_5');
+        map.getPane('pane_Kawasanberhampiran_5').style.zIndex = 405;
+        map.getPane('pane_Kawasanberhampiran_5').style['mix-blend-mode'] = 'normal';
+        var layer_Kawasanberhampiran_5 = new L.geoJson(json_Kawasanberhampiran_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Kawasanberhampiran_5',
+            layerName: 'layer_Kawasanberhampiran_5',
+            pane: 'pane_Kawasanberhampiran_5',
+            onEachFeature: pop_Kawasanberhampiran_5,
+            style: style_Kawasanberhampiran_5_0,
+        });
+        bounds_group.addLayer(layer_Kawasanberhampiran_5);
+        map.addLayer(layer_Kawasanberhampiran_5);
+        function pop_Kawasan_6(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Kawasan</th>\
+                        <td>' + (feature.properties['Kawasan'] !== null ? autolinker.link(feature.properties['Kawasan'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Kawasan_6_0() {
+            return {
+                pane: 'pane_Kawasan_6',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(104,94,130,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Kawasan_6');
+        map.getPane('pane_Kawasan_6').style.zIndex = 406;
+        map.getPane('pane_Kawasan_6').style['mix-blend-mode'] = 'normal';
+        var layer_Kawasan_6 = new L.geoJson(json_Kawasan_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Kawasan_6',
+            layerName: 'layer_Kawasan_6',
+            pane: 'pane_Kawasan_6',
+            onEachFeature: pop_Kawasan_6,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_Kawasan_6_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Kawasan_6);
+        map.addLayer(layer_Kawasan_6);
+        function pop_School_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">NAMA_SEK</th>\
+                        <td>' + (feature.properties['NAMA_SEK'] !== null ? autolinker.link(feature.properties['NAMA_SEK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BIL_MURID(</th>\
+                        <td>' + (feature.properties['BIL_MURID('] !== null ? autolinker.link(feature.properties['BIL_MURID('].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BIL_MELAYU</th>\
+                        <td>' + (feature.properties['PER_MELAYU'] !== null ? autolinker.link(feature.properties['PER_MELAYU'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BIL_INDIA</th>\
+                        <td>' + (feature.properties['PER_INDIA'] !== null ? autolinker.link(feature.properties['PER_INDIA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BIL_CHINA</th>\
+                        <td>' + (feature.properties['PER_CHINA'] !== null ? autolinker.link(feature.properties['PER_CHINA'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">BIL_LAIN</th>\
+                        <td>' + (feature.properties['PER_LAIN'] !== null ? autolinker.link(feature.properties['PER_LAIN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ALIRAN</th>\
+                        <td>' + (feature.properties['ALIRAN'] !== null ? autolinker.link(feature.properties['ALIRAN'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ALAMAT</th>\
+                        <td>' + (feature.properties['ALAMAT'] !== null ? autolinker.link(feature.properties['ALAMAT'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PHOTO</th>\
+                        <td>' + (feature.properties['PHOTO'] !== null ? '<img style="maxHeight:200px; width:200px"src="images/' + String(feature.properties['PHOTO']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: autolinker});
+        }
+
+        function style_School_7_0() {
+            return {
+                pane: 'pane_School_7',
+        rotationAngle: 0.0,
+        rotationOrigin: 'center center',
+        icon: L.icon({
+            iconUrl: 'markers/school-with-a-flag-svgrepo-com.svg',
+            iconSize: [15.2, 15.2]
+        }),
+                interactive: true,
+            }
+        }
+        map.createPane('pane_School_7');
+        map.getPane('pane_School_7').style.zIndex = 407;
+        map.getPane('pane_School_7').style['mix-blend-mode'] = 'normal';
+        var layer_School_7 = new L.geoJson(json_School_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_School_7',
+            layerName: 'layer_School_7',
+            pane: 'pane_School_7',
+            onEachFeature: pop_School_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.marker(latlng, style_School_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_School_7);
+        map.addLayer(layer_School_7);
+            var title = new L.Control();
+            title.onAdd = function (map) {
+                this._div = L.DomUtil.create('div', 'info');
+                this.update();
+                return this._div;
+            };
+            title.update = function () {
+                this._div.innerHTML = '<h2>GeoSchool</h2>';
+            };
+            title.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'<img src="legend/School_7.png" /> School': layer_School_7,'<img src="legend/Kawasan_6.png" /> Kawasan ': layer_Kawasan_6,'<img src="legend/Kawasanberhampiran_5.png" /> Kawasan berhampiran': layer_Kawasanberhampiran_5,'<img src="legend/Jalan_JKR_Negeri_KBB_4.png" /> Jalan_JKR_Negeri_KBB': layer_Jalan_JKR_Negeri_KBB_4,'<img src="legend/Jalan_JKR_Persekutuan_KBB_3.png" /> Jalan_JKR_Persekutuan_KBB': layer_Jalan_JKR_Persekutuan_KBB_3,'Mukim<br /><table><tr><td style="text-align: center;"><img src="legend/Mukim_2_BandarKulim0.png" /></td><td>Bandar Kulim</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_BandarLunas1.png" /></td><td>Bandar Lunas</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_BandarPadangSerai2.png" /></td><td>Bandar Padang Serai</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimBaganSena3.png" /></td><td>Mukim Bagan Sena</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimJunjong4.png" /></td><td>Mukim Junjong</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimKarangan5.png" /></td><td>Mukim Karangan</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimKulim6.png" /></td><td>Mukim Kulim</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimMahang7.png" /></td><td>Mukim Mahang</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimNagaLilit8.png" /></td><td>Mukim Naga Lilit</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimPadangChina9.png" /></td><td>Mukim Padang China</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimPadangMeha10.png" /></td><td>Mukim Padang Meha</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimSedim11.png" /></td><td>Mukim Sedim</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimSidamKanan12.png" /></td><td>Mukim Sidam Kanan</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimSungaiSeluang13.png" /></td><td>Mukim Sungai Seluang</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimSungaiUlar14.png" /></td><td>Mukim Sungai Ular</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_MukimTerap15.png" /></td><td>Mukim Terap</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_PekanKarangan16.png" /></td><td>Pekan Karangan</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_PekanLabuBesar17.png" /></td><td>Pekan Labu Besar</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_PekanMerbauPulas18.png" /></td><td>Pekan Merbau Pulas</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_PekanPadangMeha19.png" /></td><td>Pekan Padang Meha</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_PekanSungaiKarangan20.png" /></td><td>Pekan Sungai Karangan</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_PekanSungaiKob21.png" /></td><td>Pekan Sungai Kob</td></tr><tr><td style="text-align: center;"><img src="legend/Mukim_2_22.png" /></td><td></td></tr></table>': layer_Mukim_2,'<img src="legend/sempadandaerah_1.png" /> sempadan daerah': layer_sempadandaerah_1,"OpenStreetMap Standard": layer_OpenStreetMapStandard_0,}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_School_7,
+            zoom:'15',
+            propertyName: 'NAMA_SEK'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        var mapDiv = document.getElementById('map');
+        var row = document.createElement('div');
+        row.className="row";
+        row.id="all";
+        row.style.height = "100%";
+        var col1 = document.createElement('div');
+        col1.className="col9";
+        col1.id = "mapWindow";
+        col1.style.height = "99%";
+        col1.style.width = "80%";
+        col1.style.display = "inline-block";
+        var col2 = document.createElement('div');
+        col2.className="col3";
+        col2.id = "menu";
+        col2.style.display = "inline-block";
+        mapDiv.parentNode.insertBefore(row, mapDiv);
+        document.getElementById("all").appendChild(col1);
+        document.getElementById("all").appendChild(col2);
+        col1.appendChild(mapDiv)
+        var Filters = {"ringId": "int","Kawasan": "str","KETERANGAN": "str"};
+        function filterFunc() {
+          map.eachLayer(function(lyr){
+          if ("options" in lyr && "dataVar" in lyr["options"]){
+            features = this[lyr["options"]["dataVar"]].features.slice(0);
+            try{
+              for (key in Filters){
+                keyS = key.replace(/[^a-zA-Z0-9_]/g, "")
+                if (Filters[key] == "str" || Filters[key] == "bool"){
+                  var selection = [];
+                  var options = document.getElementById("sel_" + keyS).options
+                  for (var i=0; i < options.length; i++) {
+                    if (options[i].selected) selection.push(options[i].value);
+                  }
+                    try{
+                      if (key in features[0].properties){
+                        for (i = features.length - 1;
+                          i >= 0; --i){
+                          if (selection.indexOf(
+                          features[i].properties[key])<0
+                          && selection.length>0) {
+                          features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                  }
+                }
+                if (Filters[key] == "int"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (parseInt(features[i].properties[key])
+                          < sliderVals[0]
+                          || parseInt(features[i].properties[key])
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "real"){
+                  sliderVals =  document.getElementById(
+                    "div_" + keyS).noUiSlider.get();
+                  try{
+                    if (key in features[0].properties){
+                    for (i = features.length - 1; i >= 0; --i){
+                      if (features[i].properties[key]
+                          < sliderVals[0]
+                          || features[i].properties[key]
+                          > sliderVals[1]){
+                            features.splice(i,1);
+                          }
+                        }
+                      }
+                    } catch(err){
+                    }
+                  }
+                if (Filters[key] == "date"
+                  || Filters[key] == "datetime"
+                  || Filters[key] == "time"){
+                  try{
+                    if (key in features[0].properties){
+                      HTMLkey = key.replace(/[&\/\\#,+()$~%.'":*?<>{} ]/g, '');
+                      startdate = document.getElementById("dat_" +
+                        HTMLkey + "_date1").value.replace(" ", "T");
+                      enddate = document.getElementById("dat_" +
+                        HTMLkey + "_date2").value.replace(" ", "T");
+                      for (i = features.length - 1; i >= 0; --i){
+                        if (features[i].properties[key] < startdate
+                          || features[i].properties[key] > enddate){
+                          features.splice(i,1);
+                        }
+                      }
+                    }
+                  } catch(err){
+                  }
+                }
+              }
+            } catch(err){
+            }
+          this[lyr["options"]["layerName"]].clearLayers();
+          this[lyr["options"]["layerName"]].addData(features);
+          }
+          })
+        }
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_ringId = document.createElement("div");
+            div_ringId.id = "div_ringId";
+            div_ringId.className = "slider";
+            document.getElementById("menu").appendChild(div_ringId);
+            var lab_ringId = document.createElement('div');
+            lab_ringId.innerHTML  = 'Ring: <span id="val_ringId"></span>';
+            lab_ringId.className = 'filterlabel';
+            document.getElementById("menu").appendChild(lab_ringId);
+            var reset_ringId = document.createElement('div');
+            reset_ringId.innerHTML = 'clear filter';
+            reset_ringId.className = 'filterlabel';
+            lab_ringId.className = 'filterlabel';
+            reset_ringId.onclick = function() {
+                sel_ringId.noUiSlider.reset();
+            };
+            document.getElementById("menu").appendChild(reset_ringId);
+            var sel_ringId = document.getElementById('div_ringId');
+            noUiSlider.create(sel_ringId, {
+                connect: true,
+                start: [1, 3],
+                step: 1,
+                format: wNumb({
+                    decimals: 0,
+                    }),
+                range: {
+                min: 1,
+                max: 3
+                }
+            });
+            sel_ringId.noUiSlider.on('update', function (values) {
+            filterVals =[];
+            for (value in values){
+            filterVals.push(parseInt(value))
+            }
+            val_ringId = document.getElementById('val_ringId');
+            val_ringId.innerHTML = values.join(' - ');
+                filterFunc()
+            });
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_Kawasan = document.createElement('div');
+            div_Kawasan.id = "div_Kawasan";
+            div_Kawasan.className= "filterselect";
+            document.getElementById("menu").appendChild(div_Kawasan);
+            sel_Kawasan = document.createElement('select');
+            sel_Kawasan.multiple = true;
+            sel_Kawasan.size = 10;
+            sel_Kawasan.id = "sel_Kawasan";
+            var Kawasan_options_str = "<option value='' unselected></option>";
+            sel_Kawasan.onchange = function(){filterFunc()};
+             Kawasan_options_str  += '<option value="KAMPUNG AYER MERAH">Kampung Ayer Merah</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG AYER PUTIH">Kampung Ayer Putih</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BADLISHAH">Kampung Badlishah</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BAHARU DARUL AMAN">Kampung Baharu Darul Aman</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BANGGOL BESI">Kampung Banggol Besi</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BANGGOL PENYENGAT">Kampung Banggol Penyengat</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BATU EMPAT">Kampung Batu Empat</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BATU SEPULUH">Kampung Batu Sepuluh</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BIKAN">Kampung Bikan</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BUKIT AH CHONG">Kampung Bukit Ah Chong</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BUKIT AWI">Kampung Bukit Awi</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BUKIT CHEMPEDAK">Kampung Bukit Chempedak</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BUKIT KETEMENG">Kampung Bukit Ketemeng</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BUKIT SARANG AYAM">Kampung Bukit Sarang Ayam</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG BUKIT SIDAM">Kampung Bukit Sidam</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG DINGIN">Kampung Dingin</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG EKOR KUCHING">Kampung Ekor Kuching</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG GUAR LOMBAK">Kampung Guar Lombak</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG JANGKANG">Kampung Jangkang</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG KEBUN TEMBAKAU">Kampung Kebun Tembakau</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG KELANG LAMA">Kampung Kelang Lama</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG KELANG SAGU">Kampung Kelang Sagu</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG KUALA MEMPELAM">Kampung Kuala Mempelam</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG LESONG TUJOH">Kampung Lesong Tujoh</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG LINDONGAN RAJA">Kampung Lindongan Raja</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG NAGA LILIT">Kampung Naga Lilit</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PADANG AH TAW">Kampung Padang Ah Taw</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PADANG CHINA">Kampung Padang China</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PADANG EKOR">Kampung Padang Ekor</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PADANG MEIHA">Kampung Padang Meiha</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PADANG UBI">Kampung Padang Ubi</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PANTAI INDAU">Kampung Pantai Indau</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PAYA SERDANG">Kampung Paya Serdang</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PERENGGAN">Kampung Perenggan</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG PERMATANG TOK DIK">Kampung Permatang Tok Dik</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SEDIM">Kampung Sedim</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SELARONG">Kampung Selarong</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SIAM">Kampung Siam</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SIDAM KANAN">Kampung Sidam Kanan</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SUNGAI BADAK">Kampung Sungai Badak</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SUNGAI BULOH">Kampung Sungai Buloh</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SUNGAI KARANGAN">Kampung Sungai Karangan</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG SUNGAI ULAR">Kampung Sungai Ular</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG TELUK BANU">Kampung Teluk Banu</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG TELUK SIRA">Kampung Teluk Sira</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG TERAP">Kampung Terap</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG TERAT BATU">Kampung Terat Batu</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG TOK KARIM">Kampung Tok Karim</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG TUNKU PUTERA">Kampung Tunku Putera</option>';
+            Kawasan_options_str  += '<option value="KAMPUNG ULU MAHANG">Kampung Ulu Mahang</option>';
+            Kawasan_options_str  += '<option value="TAMAN BESTARI KULIM">Taman Bestari Kulim</option>';
+            Kawasan_options_str  += '<option value="TAMAN CEMPAKA">Taman Cempaka</option>';
+            Kawasan_options_str  += '<option value="TAMAN CENGAL INDAH">Taman Cengal Indah</option>';
+            Kawasan_options_str  += '<option value="TAMAN CERI">Taman Ceri</option>';
+            Kawasan_options_str  += '<option value="TAMAN DAHLIA">Taman Dahlia</option>';
+            Kawasan_options_str  += '<option value="TAMAN DAMAI">Taman Damai</option>';
+            Kawasan_options_str  += '<option value="TAMAN DELIMA">Taman Delima</option>';
+            Kawasan_options_str  += '<option value="TAMAN DESA AMAN">Taman Desa Aman</option>';
+            Kawasan_options_str  += '<option value="TAMAN DESA IMPIAN">Taman Desa Impian</option>';
+            Kawasan_options_str  += '<option value="TAMAN DESA MAKMUR">Taman Desa Makmur</option>';
+            Kawasan_options_str  += '<option value="TAMAN DESA SENTOSA">Taman Desa Sentosa</option>';
+            Kawasan_options_str  += '<option value="TAMAN EMAS">Taman Emas</option>';
+            Kawasan_options_str  += '<option value="TAMAN HAJI HASSAN">Taman Haji Hassan</option>';
+            Kawasan_options_str  += '<option value="TAMAN JATI">Taman Jati</option>';
+            Kawasan_options_str  += '<option value="TAMAN KAMUNTING">Taman Kamunting</option>';
+            Kawasan_options_str  += '<option value="TAMAN KEDIDI">Taman Kedidi</option>';
+            Kawasan_options_str  += '<option value="TAMAN KELADI">Taman Keladi</option>';
+            Kawasan_options_str  += '<option value="TAMAN KENARI">Taman Kenari</option>';
+            Kawasan_options_str  += '<option value="TAMAN KENYANG">Taman Kenyang</option>';
+            Kawasan_options_str  += '<option value="TAMAN KERANJI">Taman Keranji</option>';
+            Kawasan_options_str  += '<option value="TAMAN KOBIS">Taman Kobis</option>';
+            Kawasan_options_str  += '<option value="TAMAN KUCAI">Taman Kucai</option>';
+            Kawasan_options_str  += '<option value="TAMAN KULIM HI-TECH">Taman Kulim Hi-Tech</option>';
+            Kawasan_options_str  += '<option value="TAMAN KULIM PERDANA">Taman Kulim Perdana</option>';
+            Kawasan_options_str  += '<option value="TAMAN LAGENDA">Taman Lagenda</option>';
+            Kawasan_options_str  += '<option value="TAMAN MAHSURI">Taman Mahsuri</option>';
+            Kawasan_options_str  += '<option value="TAMAN MAKMUR">Taman Makmur</option>';
+            Kawasan_options_str  += '<option value="TAMAN MELATI">Taman Melati</option>';
+            Kawasan_options_str  += '<option value="TAMAN MELUR">Taman Melur</option>';
+            Kawasan_options_str  += '<option value="TAMAN MERAK">Taman Merak</option>';
+            Kawasan_options_str  += '<option value="TAMAN MEWAH">Taman Mewah</option>';
+            Kawasan_options_str  += '<option value="TAMAN MUTIARA">Taman Muitara</option>';
+            Kawasan_options_str  += '<option value="TAMAN RIA">Taman Ria</option>';
+            Kawasan_options_str  += '<option value="TAMAN SALAD">Taman Salad</option>';
+            Kawasan_options_str  += '<option value="TAMAN SELASIH">Taman Selasih</option>';
+            Kawasan_options_str  += '<option value="TAMAN SENA LABU BESAR">Taman Sena Labu Besar</option>';
+            Kawasan_options_str  += '<option value="TAMAN SENANGIN">Taman Senangin</option>';
+            Kawasan_options_str  += '<option value="TAMAN SEPILAI">Taman Sepilai</option>';
+            Kawasan_options_str  += '<option value="TAMAN SERAI SETIA">Taman Serai Setia</option>';
+            Kawasan_options_str  += '<option value="TAMAN SERAI WANGI">Taman Serai Wangi</option>';
+            Kawasan_options_str  += '<option value="TAMAN SERI ABADI">Taman Seri Abadi</option>';
+            Kawasan_options_str  += '<option value="TAMAN SERI AKASIA">Taman Seri Akasia</option>';
+            Kawasan_options_str  += '<option value="TAMAN SUASA">Taman Suasa</option>';
+            Kawasan_options_str  += '<option value="TAMAN TERATAI INDAH">Taman Teratai Indah</option>';
+            Kawasan_options_str  += '<option value="TAMAN TUNKU PUTRA">Taman Tunku Putra</option>';
+            sel_Kawasan.innerHTML = Kawasan_options_str;
+            div_Kawasan.appendChild(sel_Kawasan);
+            var lab_Kawasan = document.createElement('div');
+            lab_Kawasan.innerHTML = 'Kawasan';
+            lab_Kawasan.className = 'filterlabel';
+            div_Kawasan.appendChild(lab_Kawasan);
+            var reset_Kawasan = document.createElement('div');
+            reset_Kawasan.innerHTML = 'clear filter';
+            reset_Kawasan.className = 'filterlabel';
+            reset_Kawasan.onclick = function() {
+                var options = document.getElementById("sel_Kawasan").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_Kawasan.appendChild(reset_Kawasan);
+            document.getElementById("menu").appendChild(
+                document.createElement("div"));
+            var div_KETERANGAN = document.createElement('div');
+            div_KETERANGAN.id = "div_KETERANGAN";
+            div_KETERANGAN.className= "filterselect";
+            document.getElementById("menu").appendChild(div_KETERANGAN);
+            sel_KETERANGAN = document.createElement('select');
+            sel_KETERANGAN.multiple = true;
+            sel_KETERANGAN.size = 10;
+            sel_KETERANGAN.id = "sel_KETERANGAN";
+            var KETERANGAN_options_str = "<option value='' unselected></option>";
+            sel_KETERANGAN.onchange = function(){filterFunc()};
+            KETERANGAN_options_str  += '<option value="Bandar Kulim">Bandar Kulim</option>';
+            KETERANGAN_options_str  += '<option value="Bandar Lunas">Bandar Lunas</option>';
+            KETERANGAN_options_str  += '<option value="Bandar Padang Serai">Bandar Padang Serai</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Bagan Sena">Mukim Bagan Sena</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Junjong">Mukim Junjong</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Karangan">Mukim Karangan</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Kulim">Mukim Kulim</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Mahang">Mukim Mahang</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Naga Lilit">Mukim Naga Lilit</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Padang China">Mukim Padang China</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Padang Meha">Mukim Padang Meha</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Sedim">Mukim Sedim</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Sidam Kanan">Mukim Sidam Kanan</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Sungai Seluang">Mukim Sungai Seluang</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Sungai Ular">Mukim Sungai Ular</option>';
+            KETERANGAN_options_str  += '<option value="Mukim Terap">Mukim Terap</option>';
+            KETERANGAN_options_str  += '<option value="Pekan Karangan">Pekan Karangan</option>';
+            KETERANGAN_options_str  += '<option value="Pekan Labu Besar">Pekan Labu Besar</option>';
+            KETERANGAN_options_str  += '<option value="Pekan Merbau Pulas">Pekan Merbau Pulas</option>';
+            KETERANGAN_options_str  += '<option value="Pekan Padang Meha">Pekan Padang Meha</option>';
+            KETERANGAN_options_str  += '<option value="Pekan Sungai Karangan">Pekan Sungai Karangan</option>';
+            KETERANGAN_options_str  += '<option value="Pekan Sungai Kob">Pekan Sungai Kob</option>';
+            sel_KETERANGAN.innerHTML = KETERANGAN_options_str;
+            div_KETERANGAN.appendChild(sel_KETERANGAN);
+            var lab_KETERANGAN = document.createElement('div');
+            lab_KETERANGAN.innerHTML = 'Mukim';
+            lab_KETERANGAN.className = 'filterlabel';
+            div_KETERANGAN.appendChild(lab_KETERANGAN);
+            var reset_KETERANGAN = document.createElement('div');
+            reset_KETERANGAN.innerHTML = 'clear filter';
+            reset_KETERANGAN.className = 'filterlabel';
+            reset_KETERANGAN.onclick = function() {
+                var options = document.getElementById("sel_KETERANGAN").options;
+                for (var i=0; i < options.length; i++) {
+                    options[i].selected = false;
+                }
+                filterFunc();
+            };
+            div_KETERANGAN.appendChild(reset_KETERANGAN);
+        </script>
+    </body>
+</html>
